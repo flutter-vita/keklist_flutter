@@ -18,7 +18,7 @@ import 'package:keklist/presentation/core/extensions/localization_extensions.dar
 import 'package:keklist/presentation/screens/mind_creator/mind_creator_screen.dart';
 import 'package:keklist/presentation/screens/date_gallery/date_gallery_screen.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:keklist/presentation/core/widgets/vita_sheet.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/day_minds_card/day_minds_card.dart';
 import 'package:keklist/presentation/screens/digest/mind_universal_list_screen.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';

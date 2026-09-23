@@ -54,14 +54,20 @@ final class SettingsSectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: ClipRRect(
+      // No ClipRRect. It rounded the corners by clipping, which is an
+      // antialiased clip and therefore an offscreen layer per card per frame;
+      // on the Vita the cards then flickered while the list scrolled. Material
+      // already knows how to fill a rounded shape, and does it with one
+      // drawPath and no layer, so the radius comes from the shape instead of
+      // from a clip. The cost is that a tile's ink splash is no longer clipped
+      // at the card's corners.
+      child: Material(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(12.0),
-        child: Material(
-          color: Theme.of(context).colorScheme.surfaceContainerHighest,
-          child: ListTileTheme(
-            data: const ListTileThemeData(contentPadding: EdgeInsets.only(left: 16.0, right: 8.0)),
-            child: Column(children: _withDividers(context, children)),
-          ),
+        clipBehavior: Clip.none,
+        child: ListTileTheme(
+          data: const ListTileThemeData(contentPadding: EdgeInsets.only(left: 16.0, right: 8.0)),
+          child: Column(children: _withDividers(context, children)),
         ),
       ),
     );

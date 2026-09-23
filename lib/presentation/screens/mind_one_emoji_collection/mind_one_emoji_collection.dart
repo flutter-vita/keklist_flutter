@@ -13,7 +13,7 @@ import 'package:keklist/presentation/core/helpers/mind_utils.dart';
 import 'package:keklist/presentation/core/helpers/date_utils.dart';
 import 'package:keklist/presentation/screens/mind_info/mind_info_screen.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:keklist/presentation/core/widgets/vita_sheet.dart';
 
 final class MindOneEmojiCollectionScreen extends StatefulWidget {
   final String emoji;

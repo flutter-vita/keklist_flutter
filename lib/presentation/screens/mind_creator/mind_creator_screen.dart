@@ -7,7 +7,7 @@ import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/extensions/localization_extensions.dart';
 import 'package:keklist/presentation/screens/mind_picker/mind_picker_screen.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:keklist/presentation/core/widgets/vita_sheet.dart';
 
 final class MindCreatorScreen extends StatefulWidget {
   final Function(String text, String emoji) onDone;

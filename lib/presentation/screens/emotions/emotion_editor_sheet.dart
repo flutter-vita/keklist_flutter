@@ -6,7 +6,7 @@ import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
 import 'package:keklist/presentation/core/screen/kek_screen_state.dart';
 import 'package:keklist/presentation/core/widgets/kek_bottom_sheet.dart';
 import 'package:keklist/presentation/screens/mind_picker/mind_picker_screen.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:keklist/presentation/core/widgets/vita_sheet.dart';
 
 /// Small nested bottom sheet to create or rename a single [Emotion] (emoji +
 /// title). Dispatches to [EmotionBloc] and pops on save. Replaces the old

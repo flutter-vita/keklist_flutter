@@ -16,7 +16,8 @@ import 'package:keklist/presentation/core/widgets/sensitive_widget.dart';
 import 'package:keklist/presentation/screens/actions/action_model.dart';
 import 'package:keklist/presentation/screens/actions/actions_screen.dart';
 import 'package:keklist/presentation/screens/mind_one_emoji_collection/mind_one_emoji_collection.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:keklist/presentation/core/platform/audio_capture.dart';
+import 'package:keklist/presentation/core/widgets/vita_sheet.dart';
 import 'package:keklist/presentation/screens/mind_day_collection/widgets/messaged_list/mind_message_widget.dart';
 import 'package:keklist/presentation/blocs/mind_bloc/mind_bloc.dart';
 import 'package:keklist/presentation/core/helpers/bloc_utils.dart';
@@ -45,7 +46,7 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
   DebugMenuDataState? _debugMenuState;
   bool _creatorPanelHasFocus = false;
   Mind? _editableMind;
-  bool _isAudioRecordButtonVisible = true;
+  bool _isAudioRecordButtonVisible = false;
   late String _selectedEmoji = _rootMind.emoji;
   final ScrollController _scrollController = ScrollController();
 
@@ -62,8 +63,15 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
   void initState() {
     super.initState();
 
-    _isAudioRecordButtonVisible = _createMindEditingController.text.trim().isEmpty;
+    _isAudioRecordButtonVisible = _shouldShowAudioRecordButton;
     _createMindEditingController.addListener(_onCreateMindTextChanged);
+
+    // The answer decides whether the mic button exists at all, and on a
+    // platform with no `record` implementation it may never arrive. Nothing
+    // here waits on it; the button appears if and when it comes back yes.
+    AudioCapture.probe().then((_) {
+      if (mounted) setState(() => _isAudioRecordButtonVisible = _shouldShowAudioRecordButton);
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _mindCreatorFocusNode.addListener(() {
@@ -246,12 +254,15 @@ final class _MindInfoScreenState extends KekWidgetState<MindInfoScreen> {
     );
   }
 
+  /// Empty comment field, and a platform that can actually record.
+  bool get _shouldShowAudioRecordButton =>
+      AudioCapture.isSupported && _createMindEditingController.text.trim().isEmpty;
+
   void _onCreateMindTextChanged() {
-    final bool shouldShowAudioRecordButton = _createMindEditingController.text.trim().isEmpty;
-    if (_isAudioRecordButtonVisible == shouldShowAudioRecordButton) {
+    if (_isAudioRecordButtonVisible == _shouldShowAudioRecordButton) {
       return;
     }
-    setState(() => _isAudioRecordButtonVisible = shouldShowAudioRecordButton);
+    setState(() => _isAudioRecordButtonVisible = _shouldShowAudioRecordButton);
   }
 
   void _handleCommentDone(CreateMindData data) {

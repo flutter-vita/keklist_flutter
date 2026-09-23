@@ -39,7 +39,7 @@ import 'package:keklist/presentation/screens/mind_picker/mind_picker_screen.dart
 import 'package:keklist/presentation/screens/mind_day_collection/mind_day_collection_screen.dart';
 import 'package:keklist/domain/services/entities/mind.dart';
 import 'package:flutter/material.dart' hide DateUtils;
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:keklist/presentation/core/widgets/vita_sheet.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:keklist/presentation/core/widgets/bool_widget.dart';
 import 'package:scrollview_observer/scrollview_observer.dart';
@@ -221,14 +221,15 @@ final class _MindCollectionScreenState extends KekWidgetState<MindCollectionScre
   }
 
   Future<void> _showWhatsNew() {
-    return showCupertinoModalBottomSheet(
-      context: context,
-      builder: (builder) {
-        return WebPageScreen(
+    // Not via vita_sheet.dart: WebPageScreen is already a full screen with its
+    // own Scaffold and close button, so the shim would stack a second AppBar.
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => WebPageScreen(
           title: 'Whats new?',
           initialUri: Uri.parse(KeklistConstants.whatsNewURL),
-        );
-      },
+        ),
+      ),
     );
   }
 
