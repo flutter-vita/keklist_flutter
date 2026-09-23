@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:file_picker_vita/file_picker_vita.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -431,7 +432,14 @@ final class SettingsScreenState extends KekWidgetState<SettingsScreen> {
 
     // On Android, show action selection bottom sheet
     SettingsExportAction action = SettingsExportAction.share;
-    if (DeviceUtils.safeGetPlatform() == SupportedPlatform.android) {
+    if (VitaPaths.isVita) {
+      // The Vita has nothing to share to. share_plus has no implementation
+      // here, and the console has no system share sheet for one to call: the
+      // only way data leaves this device is a file written to the memory card.
+      // So there is no choice to offer, and the sheet below is skipped rather
+      // than shown with one live option.
+      action = SettingsExportAction.saveToFiles;
+    } else if (DeviceUtils.safeGetPlatform() == SupportedPlatform.android) {
       if (!mounted) return;
 
       SettingsExportAction? selectedAction;
