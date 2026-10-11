@@ -5,7 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:keklist/domain/repositories/tabs/models/tabs_settings.dart';
 
 final class Themes {
+  // The PS Vita has no emoji font of its own; textTheme names it too, or its Linux fallbacks replace it.
+  static const List<String> _emojiFallback = <String>['NotoColorEmoji'];
+
   static final ThemeData light = ThemeData(
+    fontFamilyFallback: _emojiFallback,
     scaffoldBackgroundColor: Colors.white,
     colorScheme: const ColorScheme.light(
       primary: Colors.black,
@@ -18,6 +22,7 @@ final class Themes {
           bodyColor: Colors.black,
           displayColor: Colors.black,
           decorationColor: Colors.black,
+          fontFamilyFallback: _emojiFallback,
         ),
     inputDecorationTheme: const InputDecorationTheme(
       labelStyle: TextStyle(color: Colors.black),
@@ -30,6 +35,7 @@ final class Themes {
   );
 
   static final ThemeData dark = ThemeData(
+    fontFamilyFallback: _emojiFallback,
     scaffoldBackgroundColor: Colors.black,
     colorScheme: const ColorScheme.dark(
       primary: Colors.white,
@@ -42,6 +48,7 @@ final class Themes {
           bodyColor: Colors.white,
           displayColor: Colors.white,
           decorationColor: Colors.white,
+          fontFamilyFallback: _emojiFallback,
         ),
     inputDecorationTheme: const InputDecorationTheme(
       labelStyle: TextStyle(color: Colors.white),

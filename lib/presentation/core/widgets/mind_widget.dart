@@ -83,7 +83,7 @@ final class MindWidget extends StatelessWidget {
               grayedOut: !isHighlighted,
               child: Text(item,
                   style: TextStyle(
-                    // fontFamily: 'NotoColorEmoji',
+                    fontFamily: 'NotoColorEmoji',
                     fontSize: fontSize,
                   )),
             ),

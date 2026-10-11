@@ -99,6 +99,11 @@ dev_dependencies:
 flutter:
   generate: true
   uses-material-design: true
+  # Emoji on the PS Vita, named in Themes; NotoColorEmoji is under the OFL (assets/fonts/OFL.txt).
+  fonts:
+    - family: NotoColorEmoji
+      fonts:
+        - asset: assets/fonts/NotoColorEmoji.ttf
   assets:
     - dotenv
     # - assets/auth_icons/
